@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title><%=title%></title>
+	<script src="javascripts/jquery.min.js"></script>
+	<style type="text/css" >
+		.login{
+		    width: 1509px;
+		    height: 400px;
+		    line-height: 400px;
+		    text-align: center;
+		}
+		.login input{
+			position: relative;
+
+		}
+		.li_1{
+			top: 0;
+		}
+		.li_2{
+			 top: 43px;
+   			 left: -166px;
+		}
+		.b_l{
+		    position: relative;
+		    top: 80px;
+		    right: 313px;
+		}
+		.b_r{
+		    position: relative;
+		    top: 80px;
+		    right: 283px;
+		}
+	</style>
+</head>
+<body>
+
+	<div class="login">
+		<%= message %>
+		<form>
+
+			<input id="username" class="li_1" type="" name="" placeholder="输入账号">
+			<input id="password" class="li_2" type="" name="" placeholder="输入密码">
+			<button class="b_l" name="">登录</button>
+			<button id="r" class="b_r" name="">注册</button>
+		</form>
+	</div>
+</body>
+<script type="text/javascript">
+	$(function(){
+		$('.b_l').click(function(){
+			var username = $('#username').val();
+			var psw = $('#password').val();
+			var data = {'name':username,'psw':psw};
+			if(!username){
+				alert('用户名不能为空')
+			}
+			else{
+				$.ajax({
+					url:'/login',
+					type:'post',
+					dataType:'text',
+					data:data,
+					async : "true",
+					success:function(data1,status){
+						var data = JSON.stringify(data1);
+						if(status == 'success'){
+							alert(data+status);
+							$(window).attr("location",'home');
+							//window.open.('home');
+						}
+					},
+					error:function(data1){
+						var data = JSON.stringify(data1,['readyState','responseText']);
+						alert(data);
+						//console.log(data);						//console.log('ajax failed');
+					}
+				})
+			}
+		});
+      	$('#r').click(function(){
+            $(window).attr("location",'register');
+        });
+	})
+</script>
+</html>

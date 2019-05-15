@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>注册账号</title>
+	<script src="javascripts/jquery.min.js"></script>
+	<style type="text/css" >
+		.register{
+		    width: 1509px;
+		    height: 400px;
+		    line-height: 400px;
+		    text-align: center;
+		}
+		.register input{
+			position: relative;
+
+		}
+		.ri_1{
+			top: 0;
+		}
+		.ri_2{
+			 top: 43px;
+   			 left: -166px;
+		}
+		.ri_3{
+		    top: 81px;
+		    left: -333px;
+		}
+		.br_r{
+			position: relative;
+		    top: 116px;
+		    right: 455px;
+		}
+	</style>
+</head>
+<body>
+	<div class="register">
+		<%- message %>
+		<form>
+			<input id="username" class="ri_1" type="" name="" placeholder="输入账号">
+			<input id="password1" class="ri_2" type="" name="" placeholder="第一次输入密码">
+			<input id="password2" class="ri_3" type="" name="" placeholder="第二次输入密码">
+			<button class="br_r" name="">注册</button>
+		</form>
+	</div>
+</body>
+<script type="text/javascript">
+	$(function(){
+		$('.br_r').click(function(){
+			var username = $('#username').val();
+			var psw1 = $('#password1').val();
+			var psw2 = $('#password2').val();
+			var data = {'name':username,'psw':psw1};
+			if(!username || psw1 != psw2){
+				alert('用户名不能为空或者两次密码不一致')
+			}
+			else{
+				$.ajax({
+					url:'/register',
+					type:'post',
+					data:data,
+					success:function(data,status){
+						if(status == 'success'){
+								location.href = 'login';
+						}
+					},
+					error:function(data,err){
+						console.log('ajaxfailed');
+						location.href = 'register';
+					}
+				})
+			}
+		})
+	});
+</script>
+</html>
